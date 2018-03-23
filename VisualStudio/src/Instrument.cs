@@ -4,7 +4,6 @@ using NAudio.Wave;
 using NAudio.Wave.SampleProviders;
 using System.Collections;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using UnityEngine;
 
@@ -38,6 +37,8 @@ namespace InstrumentPack
         }
 
         internal abstract string InstrumentType { get; }
+
+        internal abstract string MistakeAudio { get; }
 
         public void Continue()
         {
@@ -92,7 +93,7 @@ namespace InstrumentPack
             Assembly modComponentApiAssembly = Assembly.GetAssembly(typeof(ModToolComponent));
             if (modComponentApiAssembly == null)
             {
-                Debug.Log("Could not resolve assembly containing ModToolComponent.");
+                Debug.Log("[Instrument-Pack] Could not resolve assembly containing ModToolComponent.");
                 return null;
             }
 
@@ -122,55 +123,51 @@ namespace InstrumentPack
             ModUtils.UnfreezePlayer();
         }
 
-        private string SelectNextSong()
-        {
-            string songsDirectory = GetSongsDirectory();
-            string[] songs = Directory.Exists(songsDirectory) ? Directory.GetFiles(songsDirectory, "*.mp3").Where(file => file.EndsWith(".mp3")).ToArray() : new string[0];
-
-            Debug.Log("Found " + songs.Length + " songs in " + songsDirectory);
-
-            if (songs.Length == 0)
-            {
-                HUDMessage.AddMessage("No songs in directory '" + songsDirectory + "'");
-                return null;
-            }
-
-            int index = Random.Range(0, songs.Count());
-            return songs[index];
-        }
-
         private IEnumerator StartPlaying()
         {
-            this.starting = true;
-            LockControls();
+            try
+            {
+                this.starting = true;
+                LockControls();
 
-            string nextSong = this.SelectNextSong();
-            if (nextSong == null)
+                string songsDirectory = this.GetSongsDirectory();
+                PrepareSongJob prepareSongJob = new PrepareSongJob(songsDirectory);
+                prepareSongJob.Start();
+                yield return this.EquippableModComponent.StartCoroutine(prepareSongJob.WaitFor());
+
+                if (prepareSongJob.SelectedSong == null)
+                {
+                    HUDMessage.AddMessage("[Instrument-Pack]: No songs in directory '" + songsDirectory + "'");
+                    yield break;
+                }
+
+                Debug.Log("[Instrument-Pack]: Selected song " + prepareSongJob.SelectedSong);
+
+                this.reader = prepareSongJob.Reader;
+                if (this.reader == null)
+                {
+                    HUDMessage.AddMessage("[Instrument-Pack]: Cannot play song '" + prepareSongJob.SelectedSong + "'.", 10, true);
+                    yield break;
+                }
+
+                this.reader.Volume = TARGET_VOLUME * InterfaceManager.m_Panel_OptionsMenu.m_State.m_MasterVolume / prepareSongJob.MaxSample;
+
+                this.pitchShifter = new SmbPitchShiftingSampleProvider(reader);
+
+                this.waveOutEvent = new WaveOutEvent();
+                this.waveOutEvent.PlaybackStopped += this.OnPlaybackStopped;
+                this.waveOutEvent.Init(pitchShifter);
+                this.waveOutEvent.Play();
+
+                Playing playing = ModUtils.GetOrCreateComponent<Playing>(this.EquippableModComponent.EquippedModel);
+                playing.Instrument = this;
+                playing.MistakeAudio = this.MistakeAudio;
+                playing.RefreshSkillEffect();
+            }
+            finally
             {
                 this.starting = false;
-                yield break;
             }
-
-            this.reader = new AudioFileReader(nextSong);
-
-            AnalyzeVolumeJob analyzeVolumeJob = new AnalyzeVolumeJob(this.reader);
-            analyzeVolumeJob.Start();
-            yield return this.EquippableModComponent.StartCoroutine(analyzeVolumeJob.WaitFor());
-            this.reader.Volume = TARGET_VOLUME * InterfaceManager.m_Panel_OptionsMenu.m_State.m_MasterVolume / analyzeVolumeJob.maxSample;
-
-            this.pitchShifter = new SmbPitchShiftingSampleProvider(reader);
-
-            this.waveOutEvent = new WaveOutEvent();
-            this.waveOutEvent.PlaybackStopped += this.OnPlaybackStopped;
-            this.waveOutEvent.Init(pitchShifter);
-            this.waveOutEvent.Play();
-
-            Playing playing = ModUtils.GetOrCreateComponent<Playing>(this.EquippableModComponent.EquippedModel);
-            playing.Instrument = this;
-            playing.MistakeAudio = "Play_SndMistakeGuitar";
-            playing.RefreshSkillEffect();
-
-            this.starting = false;
         }
 
         private void StopPlaying()

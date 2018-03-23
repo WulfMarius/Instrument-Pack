@@ -65,10 +65,9 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\Instrument.cs" />
-    <Compile Include="src\Implementation.cs" />
     <Compile Include="src\Guitar.cs" />
     <Compile Include="src\Playing.cs" />
-    <Compile Include="src\AnalyzeVolumeJob.cs" />
+    <Compile Include="src\PrepareSongJob.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
