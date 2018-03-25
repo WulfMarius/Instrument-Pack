@@ -11,3 +11,6 @@ This mod contains music files from [Free Music Archive](http://freemusicarchive.
 
 * [Gillicuddy - Jupiter the Blue](http://freemusicarchive.org/music/gillicuddy/Plays_Guitar/01-jupiter-the-blue)
 * [Gillicuddy - Springish](http://freemusicarchive.org/music/gillicuddy/Plays_Guitar/05-springish)
+
+
+Please see the [wiki](https://github.com/WulfMarius/Instrument-Pack/wiki) for details.
