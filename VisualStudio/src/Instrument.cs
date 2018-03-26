@@ -86,6 +86,16 @@ namespace InstrumentPack
             this.pitchShifter.PitchFactor = pitch;
         }
 
+        public void StopPlaying()
+        {
+            if (this.waveOutEvent == null)
+            {
+                return;
+            }
+
+            this.waveOutEvent.Stop();
+        }
+
         internal abstract Skill GetSkill();
 
         private string GetSongsDirectory()
@@ -103,7 +113,7 @@ namespace InstrumentPack
         private void LockControls()
         {
             ModUtils.FreezePlayer();
-            GameManager.GetPlayerManagerComponent().SetControlMode(PlayerControlMode.InConversation);
+            GameManager.m_BlockNonMovementInput = true;
         }
 
         private void OnPlaybackStopped(object sender, StoppedEventArgs stoppedEventArgs)
@@ -119,7 +129,7 @@ namespace InstrumentPack
 
         private void RestoreControls()
         {
-            GameManager.GetPlayerManagerComponent().SetControlMode(PlayerControlMode.Normal);
+            GameManager.m_BlockNonMovementInput = false;
             ModUtils.UnfreezePlayer();
         }
 
@@ -159,25 +169,23 @@ namespace InstrumentPack
                 this.waveOutEvent.Init(pitchShifter);
                 this.waveOutEvent.Play();
 
-                Playing playing = ModUtils.GetOrCreateComponent<Playing>(this.EquippableModComponent.EquippedModel);
-                playing.Instrument = this;
-                playing.MistakeAudio = this.MistakeAudio;
-                playing.RefreshSkillEffect();
+                if (this.EquippableModComponent.EquippedModel != null)
+                {
+                    Playing playing = ModUtils.GetOrCreateComponent<Playing>(this.EquippableModComponent.EquippedModel);
+                    playing.Instrument = this;
+                    playing.MistakeAudio = this.MistakeAudio;
+                    playing.RefreshSkillEffect();
+                }
+                else
+                {
+                    // the equipped model is gone -> stop playing
+                    StopPlaying();
+                }
             }
             finally
             {
                 this.starting = false;
             }
-        }
-
-        private void StopPlaying()
-        {
-            if (this.waveOutEvent == null)
-            {
-                return;
-            }
-
-            this.waveOutEvent.Stop();
         }
     }
 }

@@ -111,6 +111,11 @@ namespace InstrumentPack
                 return;
             }
 
+            if (InputManager.GetFirePressed())
+            {
+                this.Instrument.StopPlaying();
+            }
+
             timePlayed += Time.deltaTime;
             if (timePlayed - lastSkillPointUpdate > SKILL_POINT_INTERVAL)
             {
