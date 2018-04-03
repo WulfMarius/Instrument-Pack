@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 53009fe747fbc4f458fdda2d4e3f66e1
-timeCreated: 1520765972
+guid: 728c06b04cf218647aec00bb1ef53abd
+folderAsset: yes
+timeCreated: 1522659126
 licenseType: Free
-NativeFormatImporter:
+DefaultImporter:
   externalObjects: {}
-  mainObjectFileID: 100100000
   userData: 
   assetBundleName: instrument-pack.unity3d
   assetBundleVariant: 
