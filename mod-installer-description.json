@@ -4,6 +4,17 @@
 	"url": "https://github.com/WulfMarius/Instrument-Pack",
 	"releases": [
 		{
+			"version": "2.0.4",
+			"dependencies": [
+				{
+					"name": "ModComponent",
+					"version": "^2.0.1"
+				}, {
+					"name": "NAudio-Unity",
+					"version": "^2.0.0"
+				}
+			]
+		}, {
 			"version": "2.0.3",
 			"dependencies": [
 				{
