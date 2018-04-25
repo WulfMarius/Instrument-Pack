@@ -112,7 +112,8 @@ namespace InstrumentPack
 
         private void LockControls()
         {
-            ModUtils.FreezePlayer();
+            GameManager.GetPlayerManagerComponent().SetControlMode(PlayerControlMode.BigCarry);
+            GameManager.GetPlayerMovementComponent().SetForceLimpSlow(true);
             GameManager.m_BlockNonMovementInput = true;
         }
 
@@ -130,7 +131,12 @@ namespace InstrumentPack
         private void RestoreControls()
         {
             GameManager.m_BlockNonMovementInput = false;
-            ModUtils.UnfreezePlayer();
+            GameManager.GetPlayerMovementComponent().SetForceLimpSlow(false);
+
+            if (GameManager.GetPlayerManagerComponent().GetControlMode() == PlayerControlMode.BigCarry)
+            {
+                GameManager.GetPlayerManagerComponent().SetControlMode(PlayerControlMode.Normal);
+            }
         }
 
         private IEnumerator StartPlaying()
