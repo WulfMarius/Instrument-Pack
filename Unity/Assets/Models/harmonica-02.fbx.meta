@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 1788826678bca17409b51838a936d7e3
-timeCreated: 1520766953
+guid: 89b9c096ca7afa2469601d79cc91aec3
+timeCreated: 1536348800
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
@@ -9,18 +9,18 @@ ModelImporter:
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: group_0_040
+    4300000: harmonica
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Body
-    second: {fileID: 2100000, guid: acfbc37d24e8d694fab960cd470fde54, type: 2}
+      name: Maerial_Metal
+    second: {fileID: 2100000, guid: 9c372e333bc92714199b3a93eade1534, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Metal
-    second: {fileID: 2100000, guid: 7692a5885ce6db04b93a6a9d6bac1f17, type: 2}
+      name: Material_Wood
+    second: {fileID: 2100000, guid: cc7b26d512eedf94abf199a33a7654e1, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

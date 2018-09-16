@@ -23,11 +23,11 @@ namespace InstrumentPack
 
         public void RefreshSkillEffect()
         {
-            float normalizedLevel = Instrument.GetSkill().GetPointsAsNormalizedValue() * 4;
+            float currentLevel = Instrument.GetSkill().GetCurrentTierNumber() + Instrument.GetSkill().GetProgressToNextLevelAsNormalizedValue(0);
 
-            this.maxMistake = (int)(9 - normalizedLevel * 2);
-            this.averageMistakeDelay = Mathf.Pow(5, normalizedLevel);
-            this.averageCorrectionDelay = Mathf.Pow(0.8f, normalizedLevel);
+            this.maxMistake = (int)(9 - currentLevel * 2);
+            this.averageMistakeDelay = Mathf.Pow(5, currentLevel);
+            this.averageCorrectionDelay = Mathf.Pow(0.8f, currentLevel);
         }
 
         private static float getRandomDelay(float average)
