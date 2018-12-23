@@ -111,7 +111,7 @@ namespace InstrumentPack
                 return;
             }
 
-            if (InputManager.GetFirePressed())
+            if (InputManager.GetFirePressed(GameManager.Instance()))
             {
                 this.Instrument.StopPlaying();
             }

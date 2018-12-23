@@ -49,7 +49,7 @@ namespace InstrumentPack
 
         public void OnEquipped()
         {
-            EquipItemPopupUtils.ShowItemPopups(Localization.Get("GAMEPLAY_Play"), string.Empty, false, false, false, true);
+            EquipItemPopupUtils.ShowItemPopups(Localization.Get("GAMEPLAY_Play"), string.Empty, false, false, true);
         }
 
         public void OnPrimaryAction()

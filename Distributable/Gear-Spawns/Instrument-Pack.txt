@@ -1,0 +1,11 @@
+scene=HuntingLodgeA
+item=GEAR_Guitar p=-6.1109,0.4246,-4.9356 r=74.3907,19.0741,20.7235 c=90
+
+scene=CrashMountainRegion
+item=GEAR_Guitar p=886.3851,161.0292,341.9259 r=76.5751,27.1746,8.1457 c=90
+
+scene=GreyMothersHouseA
+item=GEAR_Harmonica p=5.8507,4.2207,0.3640 r=0.0000,281.3304,0.0000 c=90
+
+scene=RuralStoreA
+item=GEAR_Harmonica p=-0.8018,1.5121,-7.5053 r=0.0000,84.3341,0.0000 c=90
