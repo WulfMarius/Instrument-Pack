@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Instrument-Pack")]
-[assembly: AssemblyCopyright("© 2018 Wulf Marius")]
+[assembly: AssemblyCopyright("© 2019 Wulf Marius")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

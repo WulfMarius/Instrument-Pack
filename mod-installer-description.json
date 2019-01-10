@@ -90,6 +90,20 @@
 					"version": "^2.0.0"
 				}
 			]
+		}, {
+			"version": "3.1.0",
+			"dependencies": [
+				{
+					"name": "ModComponent",
+					"version": "^3.0.0"
+				}, {
+					"name": "NAudio-Unity",
+					"version": "^2.0.0"
+				}, {
+					"name": "ModSettings",
+					"version": "^v1.4"
+				}
+			]
 		}
 	]
 }
