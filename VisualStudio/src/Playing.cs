@@ -76,6 +76,11 @@ namespace InstrumentPack
 
         private void MakeMistake()
         {
+            if (!Implementation.Mistakes)
+            {
+                return;
+            }
+
             this.offset = Random.Range(-maxMistake, maxMistake);
             GameAudioManager.PlaySound(MistakeAudio, this.gameObject);
 
